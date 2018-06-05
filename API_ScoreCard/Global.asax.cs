@@ -1,4 +1,6 @@
-﻿using System;
+﻿using API_ScoreCard.Bootstrapper;
+using API_ScoreCard.Bootstrapper.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,6 +19,8 @@ namespace API_ScoreCard
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //SqlServerTypes.Utilities.LoadNativeAssemblies(Server.MapPath("~"));
+            Bootstrap.Start();
         }
     }
 }
