@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.SqlServer.Types;
+using Infrastructure.Types;
 
 namespace Infrastructure.Data
 {
@@ -50,6 +51,7 @@ namespace Infrastructure.Data
             _modelMapper.Class<GameModel>(e =>
             {
                 e.Id(p => p.Id);
+                e.Property(p => p.State, p => { p.Column(col => col.SqlType("int")); });
                 e.Set(p => p.Cards, mapper =>
                 {
                     mapper.Cascade(Cascade.All);
@@ -59,6 +61,12 @@ namespace Infrastructure.Data
                 {
                     mapper.Cascade(Cascade.None);
                     mapper.Column("CourseId");
+                    mapper.NotNullable(true);
+                });
+                e.ManyToOne(p => p.Secretary, mapper =>
+                {
+                    mapper.Cascade(Cascade.None);
+                    mapper.Column(col => col.Name("SecretaryId"));
                     mapper.NotNullable(true);
                 });
             });
@@ -115,6 +123,18 @@ namespace Infrastructure.Data
                     mapper.Column("PlayerId");
                     mapper.NotNullable(true);
                 });
+                e.Set(p => p.ApprovedBy, mapper =>
+                {
+                    mapper.Inverse(false);
+                    mapper.Table("PlayerApproval");
+                    mapper.Cascade(Cascade.All);
+                    mapper.Key(k => k.Column("ScoreId"));
+                }, map => map.ManyToMany(p =>
+                {
+                    p.Column("PlayerId");
+                    p.ForeignKey("FK_PlayerApproval_Player");
+                    p.Class(typeof(PlayerModel));
+                }));
             });
         }
 
@@ -158,6 +178,30 @@ namespace Infrastructure.Data
                     p.ForeignKey("FK_PlayerGroup_Group");
                     p.Class(typeof(GroupModel));
                 }));
+                e.Set(p => p.Approvals, mapper =>
+                {
+                    mapper.Inverse(true);
+                    mapper.Cascade(Cascade.None);
+                    mapper.Table("PlayerApproval");
+                    mapper.Key(k => k.Column("PlayerId"));
+                }, map => map.ManyToMany(p =>
+                {
+                    p.Column("ScoreId");
+                    p.ForeignKey("FK_PlayerApproval_Score");
+                    p.Class(typeof(ScoreModel));
+                }));
+                e.Set(p => p.CardApprovals, mapper =>
+                {
+                    mapper.Inverse(false);
+                    mapper.Table("CardApprovingPlayer");
+                    mapper.Key(k => k.Column(col => col.Name("PlayerId")));
+                    mapper.Cascade(Cascade.All);
+                }, map => map.ManyToMany(p =>
+                {
+                    p.Column("CardId");
+                    p.ForeignKey("FK_CardApprovingPlayer_Card");
+                    p.Class(typeof(CardModel));
+                }));
             });
         }
 
@@ -169,8 +213,14 @@ namespace Infrastructure.Data
                 e.Property(p => p.Length);
                 e.Property(p => p.Number);
                 e.Property(p => p.Par);
-                e.Property(p => p.TargetLocation, p => p.Column(col => col.SqlType("geography")));
-                e.Property(p => p.TeeLocation, p => p.Column(col => col.SqlType("geography")));
+                e.Property(p => p.TargetLocation, p => {
+                    p.Column(col => col.SqlType("nvarchar(100)"));
+                    p.Type<CoordinatesNHibernateType>();
+                });
+                e.Property(p => p.TeeLocation, p => {
+                    p.Column(col => col.SqlType("nvarchar(100)"));
+                    p.Type<CoordinatesNHibernateType>();
+                });
                 e.ManyToOne(p => p.Course, mapper =>
                 {
                     mapper.Cascade(Cascade.None);
@@ -187,6 +237,7 @@ namespace Infrastructure.Data
                 e.Id(p => p.Id, p => p.Generator(Generators.GuidComb));
                 e.Property(p => p.StartTime);
                 e.Property(p => p.EndTime, p => p.NotNullable(false));
+                e.Property(p => p.IsGatheringCard);
                 e.Set(p => p.Players, mapper =>
                 {
                     mapper.Inverse(false);
@@ -205,6 +256,18 @@ namespace Infrastructure.Data
                     mapper.Key(k => k.Column(col => col.Name("CardId")));
                     mapper.Inverse(false);
                 }, map => map.OneToMany());
+                e.Set(p => p.ApprovingPlayers, mapper =>
+                {
+                    mapper.Inverse(true);
+                    mapper.Table("CardApprovingPlayer");
+                    mapper.Key(k => k.Column(col => col.Name("CardId")));
+                    mapper.Cascade(Cascade.None);
+                }, map => map.ManyToMany(p =>
+                {
+                    p.Column("PlayerId");
+                    p.ForeignKey("FK_CardApprovingPlayer_Player");
+                    p.Class(typeof(PlayerModel));
+                }));
             });
         }
 

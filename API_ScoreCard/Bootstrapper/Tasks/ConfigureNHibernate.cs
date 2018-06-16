@@ -1,8 +1,10 @@
 ﻿using ChamberOfSecrets;
+using Common.Enumerators;
 using Infrastructure.Data;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
 using NHibernate.Driver;
+using NHibernate.Event;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Tool.hbm2ddl;
 using System;
@@ -18,28 +20,27 @@ namespace API_ScoreCard.Bootstrapper.Tasks
     {
         public static void Configure(IUnityContainer container)
         {
-            var secretContainer = new SecretContainer("scoreCard_db");
-            var connectionString = @"Data Source=SQL6003.site4now.net;Initial Catalog=DB_A2AF2E_scorecard;";
-            var connectionStringCredentials = $"User Id={secretContainer.UserName};Password={ secretContainer.Password};";
+            var settings = container.Resolve<Settings>();
             var configuration = new Configuration().DataBaseIntegration(db =>
             {
-                db.ConnectionString = connectionString + connectionStringCredentials;
+                db.ConnectionString = settings.ConnectionString;
                 db.Dialect<MsSql2008Dialect>();
             });
+            configuration.CurrentSessionContext<CurrentSessionContext>();
             var mapper = new ModelMapper();
             Type[] myTypes = Assembly.GetExecutingAssembly().GetExportedTypes();
             mapper.AddMappings(myTypes);
             var mapping = new NHibernateMapper().Map();
             configuration
                 .AddMapping(mapping);
+            configuration.EventListeners.PreInsertEventListeners = new IPreInsertEventListener[] {new CoordinatesEventListener()}
 
             var sessionFactory = configuration.BuildSessionFactory();
 
             container.RegisterInstance(configuration);
             container.RegisterInstance(sessionFactory);
 
-            var buildDatabase = true;
-            if (buildDatabase)
+            if (settings.RebuildDatabase)
             {
                 var schema = new SchemaExport(configuration);
                 schema.Create(false, true);

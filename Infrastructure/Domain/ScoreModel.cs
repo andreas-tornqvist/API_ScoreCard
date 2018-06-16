@@ -36,6 +36,11 @@ namespace Infrastructure.Domain
         /// <summary>
         /// The state of the score: -1: rejected, 0: not set, 1: approved by 1 player, n: approved by n players.
         /// </summary>
-        public virtual int State { get; set; }
+        public virtual int State { get { return ApprovedBy?.Count ?? 0; } }
+        public virtual ICollection<PlayerModel> ApprovedBy { get; set; }
+        /// <summary>
+        /// Did the player DNF the round before or at this hole?
+        /// </summary>
+        public virtual bool IsDNF { get; set; }
     }
 }

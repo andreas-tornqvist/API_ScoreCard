@@ -16,8 +16,9 @@ namespace API_ScoreCard.Bootstrapper
             var container = new UnityContainer();
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
 
+            RegisterSettings.Register(container);
             ConfigureNHibernate.Configure(container);
-
+            RegisterRepositories.Register(container);
         }
     }
 }

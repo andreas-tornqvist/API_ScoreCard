@@ -191,10 +191,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Authorization\AuthorizeAdminAttribute.cs" />
+    <Compile Include="Authorization\AuthorizeUserAttribute.cs" />
     <Compile Include="Bootstrapper\Bootstrap.cs" />
     <Compile Include="Bootstrapper\Tasks\ConfigureNHibernate.cs" />
     <Compile Include="Bootstrapper\Tasks\RegisterRepositories.cs" />
+    <Compile Include="Bootstrapper\Tasks\RegisterSettings.cs" />
+    <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
+    <Compile Include="Controllers\ScoreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -207,10 +212,13 @@
     <Compile Include="Repositories\IGroupRepository.cs" />
     <Compile Include="Repositories\IPlayerRepository.cs" />
     <Compile Include="Repositories\IRepositoryBase.cs" />
+    <Compile Include="Repositories\IScoreRepository.cs" />
     <Compile Include="Repositories\IStatisticsRepository.cs" />
     <Compile Include="Repositories\PlayerRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\ScoreRepository.cs" />
     <Compile Include="Repositories\StatisticsRepository.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -235,6 +243,10 @@
       <Project>{7BC7EA5C-9F79-4654-B752-8BDA5F864F19}</Project>
       <Name>ChamberOfSecrets</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{6B5DCFE9-FEC9-4670-9EF7-D94D6BE629BB}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{F96FEB12-0BA5-4E51-9B6F-E621B61C7227}</Project>
       <Name>Infrastructure</Name>
@@ -258,7 +270,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>65260</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:65260/</IISUrl>
+          <IISUrl>http://localhost/scorecard/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

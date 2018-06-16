@@ -17,16 +17,19 @@ namespace API_ScoreCard.Bootstrapper.Tasks
             var gameRepository = new GameRepository(sessionFactory);
             var courseRepository = new CourseRepository(sessionFactory);
             var statisticsRepository = new StatisticsRepository(sessionFactory);
+            var scoreRepository = new ScoreRepository(sessionFactory);
 
             container.RegisterType<IPlayerRepository, PlayerRepository>();
             container.RegisterType<IGameRepository, GameRepository>();
             container.RegisterType<ICourseRepository, CourseRepository>();
             container.RegisterType<IStatisticsRepository, StatisticsRepository>();
+            container.RegisterType<IScoreRepository, ScoreRepository>();
 
             container.RegisterInstance(playerRepository);
             container.RegisterInstance(gameRepository);
             container.RegisterInstance(courseRepository);
             container.RegisterInstance(statisticsRepository);
+            container.RegisterInstance(scoreRepository);
         }
     }
 }

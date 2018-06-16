@@ -11,7 +11,9 @@ namespace Infrastructure.Domain
         public virtual Guid Id { get; set; }
         public virtual DateTime StartTime { get; set; }
         public virtual DateTime EndTime { get; set; }
+        public virtual bool IsGatheringCard { get; set; }
         public virtual ICollection<ScoreModel> Scores { get; set; }
         public virtual ICollection<PlayerModel> Players { get; set; }
+        public virtual ICollection<PlayerModel> ApprovingPlayers { get; set; }
     }
 }

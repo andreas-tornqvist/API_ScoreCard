@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\GameDtos.cs" />
+    <Compile Include="Dtos\PlayerDtos.cs" />
+    <Compile Include="Dtos\ScoreDtos.cs" />
+    <Compile Include="Enumerators\Environments.cs" />
+    <Compile Include="Enumerators\States.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

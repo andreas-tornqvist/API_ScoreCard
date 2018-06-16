@@ -17,6 +17,8 @@ namespace Infrastructure.Domain
         public virtual ICollection<GroupModel> Groups { get; set; }
         public virtual bool IsActive { get; set; }
         public virtual DateTime RegistrationDate { get; set; }
-        public virtual float Rating { get; set; }
+        public virtual float? Rating { get; set; }
+        public virtual ICollection<ScoreModel> Approvals { get; set; }
+        public virtual ICollection<CardModel> CardApprovals { get; set; }
     }
 }
