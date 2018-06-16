@@ -268,6 +268,12 @@ namespace Infrastructure.Data
                     p.ForeignKey("FK_CardApprovingPlayer_Player");
                     p.Class(typeof(PlayerModel));
                 }));
+                e.ManyToOne(p => p.Game, mapper =>
+                {
+                    mapper.NotNullable(true);
+                    mapper.Column(col => col.Name("GameId"));
+                    mapper.Cascade(Cascade.None);
+                });
             });
         }
 

@@ -1,6 +1,7 @@
 ﻿using API_ScoreCard.Repositories;
 using Common.Dtos;
 using Common.Enumerators;
+using Infrastructure.ExtensionMethods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,24 @@ namespace API_ScoreCard.Controllers
         {
             var response = _gameRepository.GetGamesByState((GameState)state);
             return Ok(response);
+        }
+
+        [Route("{playerId:Guid}/player"), HttpGet]
+        public IHttpActionResult GetPlayersGames(Guid playerId)
+        {
+            var response = _gameRepository.GetPlayersGames(playerId);
+            if (response == null)
+                return BadRequest();
+            return Ok(response.Select(g => g.ToDto()));
+        }
+
+        [Route("{gameId:Guid}"), HttpGet]
+        public IHttpActionResult GetGame(Guid gameId)
+        {
+            var response = _gameRepository.GetGame(gameId);
+            if (response == null)
+                return NotFound();
+            return Ok(response.ToDto());
         }
 
         [Route(""), HttpPost]

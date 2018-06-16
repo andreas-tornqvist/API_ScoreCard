@@ -7,6 +7,7 @@ using NHibernate;
 using Infrastructure.Domain;
 using Common.Enumerators;
 using Infrastructure.ExtensionMethods;
+using NHibernate.Criterion;
 
 namespace API_ScoreCard.Repositories
 {
@@ -34,9 +35,25 @@ namespace API_ScoreCard.Repositories
             return game.Id;
         }
 
+        public GameModel GetGame(Guid gameId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<GameModel> GetGamesByState(GameState state)
         {
             var games = Session.Query<GameModel>().Where(s => s.State == state);
+            return games;
+        }
+
+        public IEnumerable<GameModel> GetPlayersGames(Guid playerId)
+        {
+            var isPlayerExist = Session.Get<PlayerModel>(playerId);
+            if (isPlayerExist == null) return null;
+            var cards = Session.QueryOver<PlayerModel>()
+                .Where(p => p.Id == playerId)
+                .Future().FirstOrDefault().Cards;
+            var games = cards.Select(c => c.Game).Distinct();
             return games;
         }
 
@@ -62,7 +79,23 @@ namespace API_ScoreCard.Repositories
 
         public string LeaveGame(Guid gameId, Guid playerId)
         {
-            
+            var game = Session.Get<GameModel>(gameId);
+            if (game == null) return null;
+
+            if (game.State != GameState.Pending)
+                return "Det går inte att lämna spelet när det har startats. Spelar måste lämna DNF.";
+
+            if (!game.Cards.First().Players.Any(p => p.Id == playerId))
+                return "Spelaren är inte registrerad till spelet.";
+
+            var card = Session.Get<CardModel>(game.Cards.First().Id);
+            using (var transaction = Session.BeginTransaction())
+            {
+                card.Players.Remove(card.Players.First(p => p.Id == playerId));
+                Session.Update(card);
+                transaction.Commit();
+            }
+            return null;
         }
 
         public bool UpdateState(GamePutDto dto)

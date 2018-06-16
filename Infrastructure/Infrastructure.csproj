@@ -163,6 +163,7 @@
     <Compile Include="Domain\ScoreModel.cs" />
     <Compile Include="Domain\ThrowModel.cs" />
     <Compile Include="EventListeners\CoordinatesEventListener.cs" />
+    <Compile Include="ExtensionMethods\CoordinatesStaticMethods.cs" />
     <Compile Include="ExtensionMethods\GameExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\PlayerExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\ScoreExtensionMethods.cs" />

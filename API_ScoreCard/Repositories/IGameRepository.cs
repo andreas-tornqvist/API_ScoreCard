@@ -15,5 +15,7 @@ namespace API_ScoreCard.Repositories
         Guid CreateGame(GamePostDto dto);
         bool JoinGame(JoinGameDto dto);
         string LeaveGame(Guid gameId, Guid playerId);
+        IEnumerable<GameModel> GetPlayersGames(Guid playerId);
+        GameModel GetGame(Guid gameId);
     }
 }

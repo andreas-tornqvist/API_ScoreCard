@@ -15,5 +15,6 @@ namespace Infrastructure.Domain
         public virtual ICollection<ScoreModel> Scores { get; set; }
         public virtual ICollection<PlayerModel> Players { get; set; }
         public virtual ICollection<PlayerModel> ApprovingPlayers { get; set; }
+        public virtual GameModel Game { get; set; }
     }
 }
