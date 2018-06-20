@@ -17,7 +17,7 @@
     <AssemblyName>API_ScoreCard</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -200,6 +200,7 @@
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\ScoreController.cs" />
+    <Compile Include="Controllers\TourController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -214,10 +215,12 @@
     <Compile Include="Repositories\IRepositoryBase.cs" />
     <Compile Include="Repositories\IScoreRepository.cs" />
     <Compile Include="Repositories\IStatisticsRepository.cs" />
+    <Compile Include="Repositories\ITourRepository.cs" />
     <Compile Include="Repositories\PlayerRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\ScoreRepository.cs" />
     <Compile Include="Repositories\StatisticsRepository.cs" />
+    <Compile Include="Repositories\TourRepository.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -270,7 +273,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>65260</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/scorecard/</IISUrl>
+          <IISUrl>http://localhost/scorecard</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

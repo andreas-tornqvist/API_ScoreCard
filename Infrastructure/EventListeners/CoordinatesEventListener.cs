@@ -12,12 +12,12 @@ namespace Infrastructure.EventListeners
     {
         public bool OnPreInsert(PreInsertEvent @event)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public Task<bool> OnPreInsertAsync(PreInsertEvent @event, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult<bool>(false);
         }
     }
 
@@ -25,12 +25,12 @@ namespace Infrastructure.EventListeners
     {
         public bool OnPreUpdate(PreUpdateEvent @event)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public Task<bool> OnPreUpdateAsync(PreUpdateEvent @event, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult<bool>(false);
         }
     }
 }

@@ -43,7 +43,30 @@ namespace Infrastructure.Data
             MapScore();
             MapGroup();
             MapPassword();
+            MapTour();
             return _modelMapper.CompileMappingForAllExplicitlyAddedEntities();
+        }
+
+        private void MapTour()
+        {
+            _modelMapper.Class<TourModel>(e =>
+            {
+                e.Id(p => p.Id);
+                e.Property(p => p.Name);
+                e.Property(p => p.Description, p => p.NotNullable(false));
+                e.Set(p => p.Games, mapper =>
+                {
+                    mapper.Inverse(true);
+                    mapper.Key(k => k.Column(col => col.Name("TourId")));
+                    mapper.Cascade(Cascade.All);
+                }, map => map.OneToMany());
+                e.ManyToOne(p => p.Creator, mapper =>
+                {
+                    mapper.Column(col => col.Name("CreatorId"));
+                    mapper.Cascade(Cascade.None);
+                    mapper.NotNullable(true);
+                });
+            });
         }
 
         private void MapGame()
@@ -68,6 +91,12 @@ namespace Infrastructure.Data
                     mapper.Cascade(Cascade.None);
                     mapper.Column(col => col.Name("SecretaryId"));
                     mapper.NotNullable(true);
+                });
+                e.ManyToOne(p => p.Tour, mapper =>
+                {
+                    mapper.Cascade(Cascade.None);
+                    mapper.Column(col => col.Name("TourId"));
+                    mapper.NotNullable(false);
                 });
             });
         }
@@ -202,6 +231,12 @@ namespace Infrastructure.Data
                     p.ForeignKey("FK_CardApprovingPlayer_Card");
                     p.Class(typeof(CardModel));
                 }));
+                e.Set(p => p.CreatedTours, mapper =>
+                {
+                    mapper.Cascade(Cascade.None);
+                    mapper.Inverse(true);
+                    mapper.Key(k => k.Column(col => col.Name("CreatorId")));
+                }, map => map.OneToMany());
             });
         }
 

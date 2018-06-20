@@ -41,11 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HelperClasses\CoordinatesBaseClass.cs" />
+    <Compile Include="Dtos\CourseDtos.cs" />
     <Compile Include="Dtos\GameDtos.cs" />
+    <Compile Include="Dtos\HoleDtos.cs" />
     <Compile Include="Dtos\PlayerDtos.cs" />
     <Compile Include="Dtos\ScoreDtos.cs" />
+    <Compile Include="Dtos\TourDtos.cs" />
     <Compile Include="Enumerators\Environments.cs" />
     <Compile Include="Enumerators\States.cs" />
+    <Compile Include="HelperClasses\CoordinatesStaticMethods.cs" />
+    <Compile Include="Interfaces\IHasCoordinates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,15 +1,12 @@
 ﻿using NHibernate.UserTypes;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NHibernate.Engine;
 using NHibernate.SqlTypes;
 using System.Data.Common;
 using System.Data;
 using GeoAPI.Geometries;
-using Infrastructure.HelperClasses;
+using Common.HelperClasses;
 
 namespace Infrastructure.Types
 {

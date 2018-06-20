@@ -162,13 +162,12 @@
     <Compile Include="Domain\PlayerModel.cs" />
     <Compile Include="Domain\ScoreModel.cs" />
     <Compile Include="Domain\ThrowModel.cs" />
+    <Compile Include="Domain\TourModel.cs" />
     <Compile Include="EventListeners\CoordinatesEventListener.cs" />
-    <Compile Include="ExtensionMethods\CoordinatesStaticMethods.cs" />
     <Compile Include="ExtensionMethods\GameExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\PlayerExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\ScoreExtensionMethods.cs" />
-    <Compile Include="HelperClasses\CoordinatesBaseClass.cs" />
-    <Compile Include="Interfaces\IHasCoordinates.cs" />
+    <Compile Include="ExtensionMethods\TourExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Types\CoordinatesNHibernateType.cs" />
@@ -198,6 +197,8 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="HelperClasses\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

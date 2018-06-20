@@ -1,6 +1,6 @@
-﻿using Infrastructure.HelperClasses;
-using System;
+﻿using System;
 using Infrastructure.ExtensionMethods;
+using Common.HelperClasses;
 
 namespace Infrastructure.Domain
 {

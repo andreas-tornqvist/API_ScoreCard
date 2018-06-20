@@ -1,13 +1,8 @@
-﻿using GeoAPI.Geometries;
+﻿using Common.Interfaces;
 using Infrastructure.ExtensionMethods;
-using Infrastructure.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Infrastructure.HelperClasses
+namespace Common.HelperClasses
 {
     public class CoordinatesBaseClass : IHasCoordinates
     {

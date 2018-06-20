@@ -16,11 +16,13 @@ namespace Common.Dtos
 
     public class PlayerPostDto : PlayerBaseDto
     {
+        public IEnumerable<string> GroupNames { get; set; }
     }
 
     public class PlayerPatchDto : PlayerBaseDto
     {
         public bool IsActive { get; set; }
+        public IEnumerable<string> GroupNames { get; set; }
     }
 
     public class PlayerResponseDto : PlayerBaseDto

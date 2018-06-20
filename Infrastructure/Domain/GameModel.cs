@@ -14,5 +14,6 @@ namespace Infrastructure.Domain
         public virtual PlayerModel Secretary { get; set; }
         public virtual CourseModel Course { get; set; }
         public virtual GameState State { get; set; }
+        public virtual TourModel Tour { get; set; }
     }
 }

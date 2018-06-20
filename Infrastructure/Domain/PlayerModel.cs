@@ -20,5 +20,6 @@ namespace Infrastructure.Domain
         public virtual float? Rating { get; set; }
         public virtual ICollection<ScoreModel> Approvals { get; set; }
         public virtual ICollection<CardModel> CardApprovals { get; set; }
+        public virtual ICollection<TourModel> CreatedTours { get; set; }
     }
 }

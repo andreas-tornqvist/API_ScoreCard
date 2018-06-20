@@ -10,15 +10,15 @@ namespace API_ScoreCard
     public class Settings
     {
         public EnvironmentEnum Environment;
-        public bool RebuildDatabase;
+        public bool RebuildDatabase { get; set; }
         public string ConnectionString { get; set; }
         public Settings(EnvironmentEnum environment)
         {
             Environment = environment;
             if (Environment == EnvironmentEnum.Local)
             {
-                RebuildDatabase = false;
-                ConnectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=ScoreCard;Integrated Security=SSPI;";
+                RebuildDatabase = true;
+                ConnectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=ScoreCard;User id=launchpad;Password=mcquack123!;";
             }
             else if (Environment == EnvironmentEnum.Production)
             {

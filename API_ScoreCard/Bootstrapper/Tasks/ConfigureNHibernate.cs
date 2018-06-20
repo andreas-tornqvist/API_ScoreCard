@@ -1,6 +1,7 @@
 ﻿using ChamberOfSecrets;
 using Common.Enumerators;
 using Infrastructure.Data;
+using Infrastructure.EventListeners;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
 using NHibernate.Driver;
@@ -33,7 +34,8 @@ namespace API_ScoreCard.Bootstrapper.Tasks
             var mapping = new NHibernateMapper().Map();
             configuration
                 .AddMapping(mapping);
-            configuration.EventListeners.PreInsertEventListeners = new IPreInsertEventListener[] {new CoordinatesEventListener()}
+            configuration.EventListeners.PreInsertEventListeners = new IPreInsertEventListener[] { new CoordinatesInsertEventListener() };
+            configuration.EventListeners.PreUpdateEventListeners = new IPreUpdateEventListener[] { new CoordinatesUpdateEventListener() };
 
             var sessionFactory = configuration.BuildSessionFactory();
 

@@ -6,6 +6,7 @@ using NHibernate;
 using Common.Dtos;
 using Infrastructure.ExtensionMethods;
 using Infrastructure.Domain;
+using NHibernate.Criterion;
 
 namespace API_ScoreCard.Repositories
 {
@@ -40,13 +41,21 @@ namespace API_ScoreCard.Repositories
         {
             var player = Session.Get<PlayerModel>(id);
             if (player == null) return false;
-            player.FirstName = dto.FirstName;
-            player.LastName = dto.LastName;
-            player.Email = dto.Email;
-            player.Rating = dto.Rating;
-            player.IsActive = dto.IsActive;
+            var groupDisjunction = new Disjunction();
+            foreach (var groupName in dto.GroupNames)
+            {
+                groupDisjunction.Add(Restrictions.InsensitiveLike(Projections.Property<GroupModel>(p => p.Players), dto.GroupNames));
+            }
+            var groups = Session.QueryOver<GroupModel>()
+                .Where(groupDisjunction).Future().ToList();
             using (var transaction = Session.BeginTransaction())
             {
+                player.FirstName = dto.FirstName;
+                player.LastName = dto.LastName;
+                player.Email = dto.Email;
+                player.Rating = dto.Rating;
+                player.IsActive = dto.IsActive;
+                player.Groups = groups;
                 Session.Update(player);
                 transaction.Commit();
             }
